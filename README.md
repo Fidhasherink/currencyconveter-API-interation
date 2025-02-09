@@ -40,3 +40,47 @@ Make sure to run the tests to verify that your service layer works correctly, es
 for testing "mvn test"
 right click and run as junit test
 This setup will make it easy to run and test your currency converter application.
+## API Documentation
+https://exchangeratesapi.io/documentation/
+Base url http://localhost:8080
+1. GET /api/rates
+This endpoint fetches the exchange rates for a given base currency (default is USD).
+
+Request
+Method: GET
+URL: /api/rates?base={currency}
+Query Parameters
+base: (optional) The base currency (default is USD if not provided). Example: USD, EUR.
+Example response (when base is USD):
+
+{
+    "base": "USD",
+    "date": "2025-02-09",
+    "rates": {
+        "EUR": 0.85,
+        "GBP": 0.75,
+        "INR": 74.45,
+        "JPY": 110.15
+    }
+}
+Error Handling
+Status: Error connecting to external API: 404 Not Found on GET request for "https://api.exchangerate-api.com/v4/latest/xyz": "{"result":"error","error_type":"unsupported_code"}"
+
+2. POST /api/convert
+This endpoint converts an amount from one currency to another using the fetched exchange rates.
+
+Request
+Method: POST
+URL: /api/convert
+Content-Type: application/json
+Request Body
+
+{
+    "from": "USD",
+    "to": "EUR",
+    "amount": 100
+}
+from: The base currency to convert from (e.g., USD, EUR).
+to: The target currency to convert to (e.g., USD, EUR).
+amount: The amount to convert.
+
